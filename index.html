@@ -3,603 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo - Alvaro Centro Ferretero</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Alvaro Centro Ferretero - Majes, Arequipa</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --azul: #0B1F3A; --azul-medio: #153258; --azul-claro: #1E4A80; --dorado: #C9A84C; --dorado-h: #b8923e; --blanco: #FFFFFF; --gris: #A8B8CC; --borde: #1E3050; }
-  body { font-family: 'Barlow', sans-serif; background: var(--azul); color: var(--blanco); }
-  nav { background: var(--azul); border-bottom: 2px solid var(--dorado); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; color: var(--dorado); letter-spacing: 1px; text-transform: uppercase; text-decoration: none; }
-  .logo span { color: var(--blanco); }
-  nav ul { list-style: none; display: flex; gap: 1.5rem; }
-  nav ul li a { color: var(--gris); text-decoration: none; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.2s; }
-  nav ul li a:hover, nav ul li a.active { color: var(--dorado); }
-  section { padding: 4rem 2rem; }
-  .section-tag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--dorado); margin-bottom: 0.5rem; }
-  .section-header { margin-bottom: 2.5rem; }
-  .section-header h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; line-height: 1; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --azul: #0B1F3A; --azul2: #153258; --azul3: #1E4A80;
+  --dorado: #C9A84C; --dorado2: #b8923e;
+  --blanco: #FFFFFF; --gris: #F5F7FA; --gris2: #E8EDF4;
+  --texto: #2D3748; --texto2: #718096;
+}
+body { font-family: 'Barlow', sans-serif; background: var(--blanco); color: var(--texto); }
 
-  .page-hero { background: var(--azul-medio); padding: 3rem 2rem; border-bottom: 1px solid var(--borde); }
-  .page-hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 800; text-transform: uppercase; }
-  .page-hero h1 span { color: var(--dorado); }
-  .page-hero p { color: var(--gris); margin-top: 0.5rem; font-size: 15px; }
+/* ── NAV ── */
+nav { background: var(--azul); height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; position: sticky; top: 0; z-index: 200; border-bottom: 3px solid var(--dorado); }
+.nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--dorado); text-transform: uppercase; text-decoration: none; letter-spacing: 1px; }
+.nav-logo span { color: var(--blanco); }
+.nav-links { display: flex; gap: 0; list-style: none; }
+.nav-links li a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 0 1rem; height: 64px; display: flex; align-items: center; transition: all 0.2s; border-bottom: 3px solid transparent; margin-bottom: -3px; }
+.nav-links li a:hover, .nav-links li a.active { color: var(--dorado); border-bottom-color: var(--dorado); }
+.nav-wha { background: #25D366; color: #fff; padding: 8px 18px; border-radius: 2px; font-size: 13px; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; transition: background 0.2s; }
+.nav-wha:hover { background: #1ebe5d; }
 
-  .cat-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
-  .cat-btn { background: transparent; border: 1px solid var(--borde); color: var(--gris); padding: 6px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px; cursor: pointer; transition: all 0.2s; font-family: 'Barlow', sans-serif; }
-  .cat-btn.active, .cat-btn:hover { border-color: var(--dorado); color: var(--dorado); background: rgba(201,168,76,0.08); }
-  .productos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1px; background: var(--borde); border: 1px solid var(--borde); }
-  .producto-card { background: var(--azul-medio); padding: 1.25rem; transition: background 0.15s; display: none; }
-  .producto-card.visible { display: block; }
-  .producto-card:hover { background: var(--azul-claro); }
-  .prod-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-  .prod-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dorado); margin-bottom: 0.25rem; }
-  .prod-name { font-size: 14px; font-weight: 600; color: var(--blanco); margin-bottom: 0.5rem; line-height: 1.3; }
-  .prod-precio { font-size: 18px; font-weight: 700; color: var(--dorado); }
-  .prod-precio span { font-size: 11px; font-weight: 400; color: var(--gris); margin-left: 4px; }
-  .btn-cotizar { display: block; width: 100%; margin-top: 0.75rem; background: transparent; border: 1px solid var(--borde); color: var(--gris); padding: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px; cursor: pointer; transition: all 0.15s; font-family: 'Barlow', sans-serif; text-align: center; text-decoration: none; display: block; }
-  .btn-cotizar:hover { border-color: var(--dorado); color: var(--dorado); }
-  footer { background: #060F1E; padding: 1.5rem 2rem; text-align: center; border-top: 1px solid var(--borde); }
-  footer p { font-size: 12px; color: #3a5070; }
-  footer span { color: var(--dorado); }
-  @media (max-width: 768px) { nav ul { display: none; } }
+/* ── HERO SLIDER ── */
+.hero { position: relative; background: var(--azul2); overflow: hidden; height: 480px; }
+.slides { display: flex; height: 100%; transition: transform 0.5s ease; }
+.slide { min-width: 100%; height: 100%; display: flex; align-items: center; padding: 0 6%; position: relative; }
+.slide-1 { background: linear-gradient(135deg, #0B1F3A 0%, #1E4A80 100%); }
+.slide-2 { background: linear-gradient(135deg, #153258 0%, #0B1F3A 100%); }
+.slide-3 { background: linear-gradient(135deg, #1a2f4a 0%, #153258 100%); }
+.slide-content { max-width: 520px; z-index: 2; }
+.slide-badge { display: inline-block; background: var(--dorado); color: var(--azul); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; padding: 4px 14px; border-radius: 2px; margin-bottom: 1.2rem; }
+.slide-content h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; text-transform: uppercase; color: var(--blanco); line-height: 1; margin-bottom: 1rem; }
+.slide-content h1 em { color: var(--dorado); font-style: normal; }
+.slide-content p { color: rgba(255,255,255,0.75); font-size: 16px; line-height: 1.7; margin-bottom: 1.75rem; max-width: 420px; }
+.slide-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-hero { background: var(--dorado); color: var(--azul); border: none; padding: 12px 28px; font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s; }
+.btn-hero:hover { background: var(--dorado2); }
+.btn-hero-out { background: transparent; color: var(--blanco); border: 2px solid rgba(255,255,255,0.4); padding: 12px 28px; font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; }
+.btn-hero-out:hover { border-color: var(--dorado); color: var(--dorado); }
+.slide-deco { position: absolute; right: 8%; top: 50%; transform: translateY(-50%); font-size: 160px; opacity: 0.07; }
+.hero-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.2s; border: none; }
+.dot.active { background: var(--dorado); width: 24px; border-radius: 4px; }
+.hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--blanco); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; z-index: 10; }
+.hero-arrow:hover { background: var(--dorado); border-color: var(--dorado); color: var(--azul); }
+.hero-prev { left: 20px; }
+.hero-next { right: 20px; }
+
+/* ── STATS BAR ── */
+.stats-bar { background: var(--azul); border-top: 1px solid rgba(201,168,76,0.25); border-bottom: 3px solid var(--dorado); display: grid; grid-template-columns: repeat(4, 1fr); }
+.stat-item { padding: 1.25rem 1rem; text-align: center; border-right: 1px solid rgba(255,255,255,0.07); }
+.stat-item:last-child { border-right: none; }
+.stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--dorado); line-height: 1; }
+.stat-lbl { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+/* ── SECCIÓN GENÉRICA ── */
+.sec { padding: 4rem 2rem; }
+.sec-alt { background: var(--gris); }
+.sec-tag { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--blanco); background: var(--azul); padding: 3px 10px; border-radius: 2px; margin-bottom: 0.6rem; }
+.sec-header { margin-bottom: 2.5rem; }
+.sec-header h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; color: var(--azul); line-height: 1; }
+.sec-header p { color: var(--texto2); font-size: 15px; margin-top: 0.4rem; }
+
+/* ── CATEGORÍAS ── */
+.cats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+.cat-card { background: var(--blanco); border: 1px solid var(--gris2); border-top: 3px solid var(--dorado); border-radius: 2px; overflow: hidden; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; display: block; }
+.cat-card:hover { box-shadow: 0 6px 20px rgba(11,31,58,0.12); transform: translateY(-2px); }
+.cat-img { height: 110px; background: var(--gris); display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 1px solid var(--gris2); overflow: hidden; }
+.cat-img img { width: 100%; height: 100%; object-fit: cover; }
+.cat-name { padding: 0.75rem 1rem; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--azul); }
+
+/* ── PRODUCTOS DESTACADOS ── */
+.prods-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.5rem; }
+.prod-card { background: var(--blanco); border: 1px solid var(--gris2); border-top: 3px solid var(--dorado); border-radius: 2px; overflow: hidden; transition: box-shadow 0.2s; }
+.prod-card:hover { box-shadow: 0 4px 16px rgba(11,31,58,0.1); }
+.prod-img { height: 160px; background: var(--gris); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; border-bottom: 1px solid var(--gris2); overflow: hidden; }
+.prod-img img { width: 100%; height: 100%; object-fit: contain; padding: 1rem; }
+.prod-body { padding: 1rem 1.25rem 1.25rem; }
+.prod-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dorado); margin-bottom: 0.3rem; }
+.prod-name { font-size: 14px; font-weight: 600; color: var(--azul); line-height: 1.3; margin-bottom: 0.75rem; }
+.prod-precio { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--azul); margin-bottom: 0.75rem; }
+.prod-precio small { font-size: 13px; font-weight: 400; color: var(--texto2); font-family: 'Barlow', sans-serif; margin-left: 4px; }
+.btn-cot { display: block; width: 100%; background: transparent; border: 1.5px solid var(--dorado); color: var(--azul); padding: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px; cursor: pointer; font-family: 'Barlow', sans-serif; text-align: center; text-decoration: none; transition: all 0.15s; }
+.btn-cot:hover { background: var(--dorado); }
+
+/* ── BANNER OFERTA ── */
+.banner-oferta { background: var(--azul); border-top: 3px solid var(--dorado); border-bottom: 3px solid var(--dorado); padding: 3rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.banner-oferta h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 2.5rem; font-weight: 800; text-transform: uppercase; color: var(--blanco); line-height: 1; }
+.banner-oferta h2 em { color: var(--dorado); font-style: normal; }
+.banner-oferta p { color: rgba(255,255,255,0.7); font-size: 15px; margin-top: 0.5rem; }
+
+/* ── MISIÓN VISIÓN ── */
+.mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.mv-card { background: var(--blanco); border: 1px solid var(--gris2); border-top: 3px solid var(--dorado); padding: 2rem; border-radius: 2px; }
+.mv-card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.4rem; font-weight: 800; text-transform: uppercase; color: var(--azul); margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--gris2); }
+.mv-card p { font-size: 15px; color: var(--texto2); line-height: 1.8; }
+
+/* ── GALERÍA ── */
+.galeria-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; border: 2px solid var(--dorado); }
+.gal-item { aspect-ratio: 1; background: var(--gris); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; overflow: hidden; cursor: pointer; transition: opacity 0.2s; }
+.gal-item:hover { opacity: 0.85; }
+.gal-item:first-child { grid-column: span 2; grid-row: span 2; }
+.gal-item img { width: 100%; height: 100%; object-fit: cover; }
+.gal-icon { font-size: 2.5rem; opacity: 0.2; }
+.gal-lbl { font-size: 11px; color: #bbb; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ── FOOTER ── */
+footer { background: var(--azul); border-top: 3px solid var(--dorado); padding: 3rem 2rem 1.5rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 2.5rem; margin-bottom: 2rem; }
+.footer-brand .logo-f { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: var(--dorado); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; }
+.footer-brand .logo-f span { color: var(--blanco); }
+.footer-brand p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 1rem; }
+.footer-social { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+.social-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: var(--blanco); font-size: 14px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.2s; }
+.social-btn:hover { background: var(--dorado); border-color: var(--dorado); color: var(--azul); }
+.footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dorado); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(201,168,76,0.25); }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 0.5rem; }
+.footer-col ul li a { color: rgba(255,255,255,0.55); font-size: 13px; text-decoration: none; transition: color 0.2s; }
+.footer-col ul li a:hover { color: var(--dorado); }
+.footer-tienda { margin-bottom: 1.25rem; }
+.footer-tienda strong { color: var(--blanco); font-size: 13px; display: block; margin-bottom: 0.2rem; }
+.footer-tienda span { color: rgba(255,255,255,0.5); font-size: 12px; line-height: 1.6; display: block; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+.footer-bottom span { color: var(--dorado); }
+
+/* ── WHA FLOTANTE ── */
+.wha-float { position: fixed; bottom: 24px; right: 24px; background: #25D366; color: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 16px rgba(37,211,102,0.4); z-index: 999; transition: transform 0.2s; }
+.wha-float:hover { transform: scale(1.1); }
+
+@media (max-width: 768px) {
+  .nav-links, .nav-wha { display: none; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .mv-grid { grid-template-columns: 1fr; }
+  .galeria-grid { grid-template-columns: repeat(2, 1fr); }
+  .gal-item:first-child { grid-column: span 2; grid-row: span 1; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .banner-oferta { text-align: center; justify-content: center; }
+}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a href="index.html" class="logo">Alvaro <span>Centro Ferretero</span></a>
-  <ul>
-    <li><a href="index.html">Inicio</a></li>
-    <li><a href="catalogo.html" class="active">Catálogo</a></li>
+  <a href="index.html" class="nav-logo">Alvaro <span>Centro Ferretero</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Inicio</a></li>
+    <li><a href="catalogo.html">Catálogo</a></li>
+    <li><a href="index.html#categorias">Categorías</a></li>
     <li><a href="cotizacion.html">Cotizar</a></li>
     <li><a href="contacto.html">Contacto</a></li>
   </ul>
+  <a href="cotizacion.html" class="nav-wha">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Cotizar
+  </a>
 </nav>
 
-<div class="page-hero">
-  <h1>Catálogo de <span>Productos</span></h1>
-  <p>Encuentra todo lo que necesitas para tu proyecto. Haz clic en "Cotizar" para recibir precio por WhatsApp.</p>
+<!-- HERO SLIDER -->
+<div class="hero">
+  <div class="slides" id="slides">
+    <div class="slide slide-1">
+      <div class="slide-content">
+        <div class="slide-badge">📍 Majes, Arequipa</div>
+        <h1>Tu ferretería<br>de <em>confianza</em></h1>
+        <p>Materiales, herramientas y soluciones para construcción y hogar. Calidad y atención honesta.</p>
+        <div class="slide-btns">
+          <a href="cotizacion.html" class="btn-hero">Pedir cotización</a>
+          <a href="catalogo.html" class="btn-hero-out">Ver catálogo</a>
+        </div>
+      </div>
+      <div class="slide-deco">🔨</div>
+    </div>
+    <div class="slide slide-2">
+      <div class="slide-content">
+        <div class="slide-badge">🔥 Ofertas de la semana</div>
+        <h1>Precios<br><em>directos</em> al cliente</h1>
+        <p>Cotiza cualquier producto y te respondemos por WhatsApp en minutos con el mejor precio.</p>
+        <div class="slide-btns">
+          <a href="cotizacion.html" class="btn-hero">Cotizar ahora</a>
+          <a href="catalogo.html" class="btn-hero-out">Ver productos</a>
+        </div>
+      </div>
+      <div class="slide-deco">⚡</div>
+    </div>
+    <div class="slide slide-3">
+      <div class="slide-content">
+        <div class="slide-badge">🏗️ Construcción y hogar</div>
+        <h1>Todo para<br>tu <em>proyecto</em></h1>
+        <p>Desde un clavo hasta materiales de construcción. Dos locales para atenderte mejor en Majes.</p>
+        <div class="slide-btns">
+          <a href="contacto.html" class="btn-hero">Ver locales</a>
+          <a href="catalogo.html" class="btn-hero-out">Ver catálogo</a>
+        </div>
+      </div>
+      <div class="slide-deco">🏗️</div>
+    </div>
+  </div>
+  <button class="hero-arrow hero-prev" onclick="moverSlide(-1)">&#8592;</button>
+  <button class="hero-arrow hero-next" onclick="moverSlide(1)">&#8594;</button>
+  <div class="hero-dots" id="dots">
+    <button class="dot active" onclick="irSlide(0)"></button>
+    <button class="dot" onclick="irSlide(1)"></button>
+    <button class="dot" onclick="irSlide(2)"></button>
+  </div>
 </div>
 
-<section>
-  <div class="cat-filters">
-    <button class="cat-btn active" onclick="filtrar('todos',this)">Todos</button>
-    <button class="cat-btn" onclick="filtrar('herramientas',this)">Herramientas</button>
-    <button class="cat-btn" onclick="filtrar('plomeria',this)">Plomería</button>
-    <button class="cat-btn" onclick="filtrar('electrico',this)">Eléctrico</button>
-    <button class="cat-btn" onclick="filtrar('pintura',this)">Pintura</button>
-    <button class="cat-btn" onclick="filtrar('fijacion',this)">Fijación</button>
-  </div>
-
-  <!-- ✏️ PRODUCTOS — agrega, edita o elimina bloques aquí -->
-  <div class="productos-grid" id="productosGrid">
-
-    <div class="producto-card visible" data-cat="herramientas">
-      <div class="prod-icon">🔨</div>
-      <div class="prod-cat">Herramientas</div>
-      <div class="prod-name">Martillo de acero 16oz</div>
-      <div class="prod-precio">S/ 35 <span>/unidad</span></div>
-      <a href="cotizacion.html?p=Martillo+de+acero+16oz" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="herramientas">
-      <div class="prod-icon">🔩</div>
-      <div class="prod-cat">Herramientas</div>
-      <div class="prod-name">Taladro percutor 600W</div>
-      <div class="prod-precio">S/ 189 <span>/unidad</span></div>
-      <a href="cotizacion.html?p=Taladro+percutor+600W" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="herramientas">
-      <div class="prod-icon">📏</div>
-      <div class="prod-cat">Herramientas</div>
-      <div class="prod-name">Nivel de burbuja 60cm</div>
-      <div class="prod-precio">S/ 22 <span>/unidad</span></div>
-      <a href="cotizacion.html?p=Nivel+de+burbuja+60cm" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="plomeria">
-      <div class="prod-icon">🚰</div>
-      <div class="prod-cat">Plomería</div>
-      <div class="prod-name">Tubo PVC 4" x 3m</div>
-      <div class="prod-precio">S/ 28 <span>/unidad</span></div>
-      <a href="cotizacion.html?p=Tubo+PVC+4+pulgadas" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="plomeria">
-      <div class="prod-icon">🔧</div>
-      <div class="prod-cat">Plomería</div>
-      <div class="prod-name">Llave de paso ½"</div>
-      <div class="prod-precio">S/ 12 <span>/unidad</span></div>
-      <a href="cotizacion.html?p=Llave+de+paso+1/2" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="plomeria">
-      <div class="prod-icon">💧</div>
-      <div class="prod-cat">Plomería</div>
-      <div class="prod-name">Cinta teflón (pack x10)</div>
-      <div class="prod-precio">S/ 8 <span>/pack</span></div>
-      <a href="cotizacion.html?p=Cinta+teflon+pack+x10" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="electrico">
-      <div class="prod-icon">⚡</div>
-      <div class="prod-cat">Eléctrico</div>
-      <div class="prod-name">Cable THW 2.5mm (rollo 100m)</div>
-      <div class="prod-precio">S/ 95 <span>/rollo</span></div>
-      <a href="cotizacion.html?p=Cable+THW+2.5mm+rollo+100m" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="electrico">
-      <div class="prod-icon">🔌</div>
-      <div class="prod-cat">Eléctrico</div>
-      <div class="prod-name">Tomacorriente doble</div>
-      <div class="prod-precio">S/ 14 <span>/unidad</span></div>
-      <a href="cotizacion.html?p=Tomacorriente+doble" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="electrico">
-      <div class="prod-icon">💡</div>
-      <div class="prod-cat">Eléctrico</div>
-      <div class="prod-name">Foco LED 9W E27</div>
-      <div class="prod-precio">S/ 9 <span>/unidad</span></div>
-      <a href="cotizacion.html?p=Foco+LED+9W+E27" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="pintura">
-      <div class="prod-icon">🖌️</div>
-      <div class="prod-cat">Pintura</div>
-      <div class="prod-name">Pintura látex 4L</div>
-      <div class="prod-precio">S/ 48 <span>/galón</span></div>
-      <a href="cotizacion.html?p=Pintura+latex+4+litros" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="pintura">
-      <div class="prod-icon">🎨</div>
-      <div class="prod-cat">Pintura</div>
-      <div class="prod-name">Anticorrosivo esmalte 1L</div>
-      <div class="prod-precio">S/ 32 <span>/litro</span></div>
-      <a href="cotizacion.html?p=Anticorrosivo+esmalte+1+litro" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="pintura">
-      <div class="prod-icon">🪣</div>
-      <div class="prod-cat">Pintura</div>
-      <div class="prod-name">Rodillo de pintura 9"</div>
-      <div class="prod-precio">S/ 18 <span>/unidad</span></div>
-      <a href="cotizacion.html?p=Rodillo+de+pintura+9" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="fijacion">
-      <div class="prod-icon">🔩</div>
-      <div class="prod-cat">Fijación</div>
-      <div class="prod-name">Tornillos autorroscantes (caja 200u)</div>
-      <div class="prod-precio">S/ 15 <span>/caja</span></div>
-      <a href="cotizacion.html?p=Tornillos+autorroscantes+caja+200u" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="fijacion">
-      <div class="prod-icon">⚓</div>
-      <div class="prod-cat">Fijación</div>
-      <div class="prod-name">Taco Fisher 6mm (bolsa x50)</div>
-      <div class="prod-precio">S/ 6 <span>/bolsa</span></div>
-      <a href="cotizacion.html?p=Taco+Fisher+6mm" class="btn-cotizar">Cotizar</a>
-    </div>
-
-    <div class="producto-card visible" data-cat="fijacion">
-      <div class="prod-icon">🏗️</div>
-      <div class="prod-cat">Fijación</div>
-      <div class="prod-name">Silicona transparente tubo</div>
-      <div class="prod-precio">S/ 12 <span>/tubo</span></div>
-      <a href="cotizacion.html?p=Silicona+transparente" class="btn-cotizar">Cotizar</a>
-    </div>
-
-  </div>
-  <!-- ✏️ FIN PRODUCTOS -->
-</section>
-
-<footer>
-  <p>© 2025 <span>Alvaro Centro Ferretero</span> · Majes, Arequipa</p>
-</footer>
-
-<script>
-  function filtrar(cat, btn) {
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.producto-card').forEach(card => {
-      card.classList.toggle('visible', cat === 'todos' || card.dataset.cat === cat);
-    });
-  }
-</script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contacto - Alvaro Centro Ferretero</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --azul: #0B1F3A; --azul-medio: #153258; --azul-claro: #1E4A80; --dorado: #C9A84C; --dorado-h: #b8923e; --blanco: #FFFFFF; --gris: #A8B8CC; --borde: #1E3050; }
-  body { font-family: 'Barlow', sans-serif; background: var(--azul); color: var(--blanco); }
-  nav { background: var(--azul); border-bottom: 2px solid var(--dorado); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; color: var(--dorado); letter-spacing: 1px; text-transform: uppercase; text-decoration: none; }
-  .logo span { color: var(--blanco); }
-  nav ul { list-style: none; display: flex; gap: 1.5rem; }
-  nav ul li a { color: var(--gris); text-decoration: none; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.2s; }
-  nav ul li a:hover, nav ul li a.active { color: var(--dorado); }
-
-  .page-hero { background: var(--azul-medio); padding: 3rem 2rem; border-bottom: 1px solid var(--borde); }
-  .page-hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 800; text-transform: uppercase; }
-  .page-hero h1 span { color: var(--dorado); }
-  .page-hero p { color: var(--gris); margin-top: 0.5rem; font-size: 15px; }
-
-  section { padding: 4rem 2rem; }
-  .section-tag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--dorado); margin-bottom: 0.5rem; }
-  .section-header { margin-bottom: 2.5rem; }
-  .section-header h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; line-height: 1; }
-
-  .contacto-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
-  .contacto-card { background: var(--azul-medio); border: 1px solid var(--borde); border-top: 3px solid var(--dorado); padding: 1.75rem; border-radius: 2px; }
-  .contacto-card h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dorado); margin-bottom: 0.75rem; }
-  .contacto-card p { font-size: 15px; color: var(--blanco); line-height: 1.7; }
-  .contacto-card a { color: var(--dorado); text-decoration: none; }
-  .contacto-card a:hover { text-decoration: underline; }
-
-  .mapa-placeholder { background: var(--azul-medio); border: 1px solid var(--borde); border-radius: 2px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
-  .mapa-placeholder p { color: var(--gris); font-size: 14px; }
-  .mapa-placeholder a { color: var(--dorado); font-size: 14px; font-weight: 600; text-decoration: none; }
-  .mapa-placeholder a:hover { text-decoration: underline; }
-
-  .wha-cta { background: var(--azul-medio); border: 1px solid var(--borde); padding: 2.5rem 2rem; text-align: center; border-radius: 2px; margin-top: 2rem; }
-  .wha-cta h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.75rem; }
-  .wha-cta p { color: var(--gris); font-size: 14px; margin-bottom: 1.5rem; }
-  .wha-btn { display: inline-flex; align-items: center; gap: 8px; background: #25D366; color: #fff; border: none; padding: 14px 32px; font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; cursor: pointer; transition: background 0.2s; text-decoration: none; }
-  .wha-btn:hover { background: #1ebe5d; }
-
-  footer { background: #060F1E; padding: 1.5rem 2rem; text-align: center; border-top: 1px solid var(--borde); }
-  footer p { font-size: 12px; color: #3a5070; }
-  footer span { color: var(--dorado); }
-  @media (max-width: 768px) { nav ul { display: none; } .contacto-grid { grid-template-columns: 1fr; } }
-</style>
-</head>
-<body>
-
-<nav>
-  <a href="index.html" class="logo">Alvaro <span>Centro Ferretero</span></a>
-  <ul>
-    <li><a href="index.html">Inicio</a></li>
-    <li><a href="catalogo.html">Catálogo</a></li>
-    <li><a href="cotizacion.html">Cotizar</a></li>
-    <li><a href="contacto.html" class="active">Contacto</a></li>
-  </ul>
-</nav>
-
-<div class="page-hero">
-  <h1>Contacto y <span>Ubicación</span></h1>
-  <p>Visítanos en Majes, Arequipa o escríbenos por WhatsApp.</p>
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">+500</div><div class="stat-lbl">Productos</div></div>
+  <div class="stat-item"><div class="stat-num">+15</div><div class="stat-lbl">Años de exp.</div></div>
+  <div class="stat-item"><div class="stat-num">2</div><div class="stat-lbl">Locales</div></div>
+  <div class="stat-item"><div class="stat-num">L–S</div><div class="stat-lbl">8am – 7pm</div></div>
 </div>
 
-<section>
-  <div class="section-header">
-    <div class="section-tag">📍 Encuéntranos</div>
-    <h2>Información de contacto</h2>
+<!-- CATEGORÍAS -->
+<section class="sec" id="categorias">
+  <div class="sec-header">
+    <div class="sec-tag">🗂️ Departamentos</div>
+    <h2>Categorías</h2>
+    <p>Encuentra todo lo que necesitas por categoría</p>
   </div>
-
-  <div class="contacto-grid">
-    <div class="contacto-card">
-      <h4>📍 Dirección</h4>
-      <p>Majes, Arequipa, Perú<br><span style="font-size:13px;color:#5a7a9a;">(actualiza con tu dirección exacta)</span></p>
-    </div>
-    <div class="contacto-card">
-      <h4>📱 WhatsApp</h4>
-      <p><a href="https://wa.me/51944616131">+51 944 616 131</a><br><span style="font-size:13px;color:var(--gris);">Respuesta en minutos</span></p>
-    </div>
-    <div class="contacto-card">
-      <h4>🕐 Horario de atención</h4>
-      <p>Lunes a Sábado<br>8:00 am – 7:00 pm</p>
-    </div>
-  </div>
-
-  <!-- MAPA -->
-  <div class="section-header">
-    <div class="section-tag">🗺️ Ubicación</div>
-    <h2>Cómo llegar</h2>
-  </div>
-  <div class="mapa-placeholder">
-    <p style="font-size:2rem;">🗺️</p>
-    <p>Mapa de ubicación</p>
-    <!-- ✏️ Cuando tengas dirección exacta, reemplaza esto con un iframe de Google Maps -->
-    <!-- Ejemplo: <iframe src="https://maps.google.com/maps?q=TU+DIRECCION&output=embed" width="100%" height="300" frameborder="0"></iframe> -->
-    <a href="https://maps.google.com/?q=Majes,Arequipa,Peru" target="_blank">Ver en Google Maps →</a>
-  </div>
-
-  <!-- CTA WHATSAPP -->
-  <div class="wha-cta">
-    <h3>¿Listo para cotizar?</h3>
-    <p>Escríbenos ahora y te atendemos al instante.</p>
-    <a href="https://wa.me/51944616131?text=Hola!+Quisiera+información+sobre+sus+productos" class="wha-btn" target="_blank">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Escribir por WhatsApp
+  <div class="cats-grid">
+    <a href="catalogo.html" class="cat-card">
+      <div class="cat-img">🔨</div>
+      <div class="cat-name">Herramientas</div>
+    </a>
+    <a href="catalogo.html" class="cat-card">
+      <div class="cat-img">🚰</div>
+      <div class="cat-name">Plomería</div>
+    </a>
+    <a href="catalogo.html" class="cat-card">
+      <div class="cat-img">⚡</div>
+      <div class="cat-name">Eléctrico</div>
+    </a>
+    <a href="catalogo.html" class="cat-card">
+      <div class="cat-img">🖌️</div>
+      <div class="cat-name">Pinturas</div>
+    </a>
+    <a href="catalogo.html" class="cat-card">
+      <div class="cat-img">🔩</div>
+      <div class="cat-name">Fijación</div>
+    </a>
+    <a href="catalogo.html" class="cat-card">
+      <div class="cat-img">🏗️</div>
+      <div class="cat-name">Construcción</div>
+    </a>
+    <a href="catalogo.html" class="cat-card">
+      <div class="cat-img">🚪</div>
+      <div class="cat-name">Acabados</div>
+    </a>
+    <a href="catalogo.html" class="cat-card">
+      <div class="cat-img">🛁</div>
+      <div class="cat-name">Baños</div>
     </a>
   </div>
 </section>
 
-<footer>
-  <p>© 2025 <span>Alvaro Centro Ferretero</span> · Majes, Arequipa</p>
-</footer>
-
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cotización - Alvaro Centro Ferretero</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --azul: #0B1F3A; --azul-medio: #153258; --azul-claro: #1E4A80; --dorado: #C9A84C; --dorado-h: #b8923e; --blanco: #FFFFFF; --gris: #A8B8CC; --borde: #1E3050; }
-  body { font-family: 'Barlow', sans-serif; background: var(--azul); color: var(--blanco); }
-  nav { background: var(--azul); border-bottom: 2px solid var(--dorado); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; color: var(--dorado); letter-spacing: 1px; text-transform: uppercase; text-decoration: none; }
-  .logo span { color: var(--blanco); }
-  nav ul { list-style: none; display: flex; gap: 1.5rem; }
-  nav ul li a { color: var(--gris); text-decoration: none; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.2s; }
-  nav ul li a:hover, nav ul li a.active { color: var(--dorado); }
-
-  .page-hero { background: var(--azul-medio); padding: 3rem 2rem; border-bottom: 1px solid var(--borde); }
-  .page-hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 800; text-transform: uppercase; }
-  .page-hero h1 span { color: var(--dorado); }
-  .page-hero p { color: var(--gris); margin-top: 0.5rem; font-size: 15px; }
-
-  .cot-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; padding: 4rem 2rem; align-items: start; max-width: 1100px; }
-  .cot-info h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.6rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem; }
-  .cot-info p { color: var(--gris); font-size: 14px; line-height: 1.7; margin-bottom: 1.5rem; }
-  .cot-feature { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--borde); }
-  .cot-feature:last-of-type { border-bottom: none; }
-  .cot-dot { width: 8px; height: 8px; background: var(--dorado); border-radius: 50%; flex-shrink: 0; }
-  .cot-feature span { font-size: 13px; color: var(--gris); }
-
-  .form-group { margin-bottom: 1rem; }
-  .form-group label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gris); margin-bottom: 6px; }
-  .form-group input, .form-group textarea, .form-group select { width: 100%; background: var(--azul-medio); border: 1px solid var(--borde); color: var(--blanco); padding: 10px 14px; font-family: 'Barlow', sans-serif; font-size: 14px; border-radius: 2px; outline: none; transition: border-color 0.2s; }
-  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--dorado); }
-  .form-group textarea { resize: vertical; min-height: 100px; }
-  .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath stroke='%23A8B8CC' stroke-width='1.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
-  .form-group select option { background: var(--azul-medio); }
-  .wha-btn { width: 100%; background: #25D366; color: #fff; border: none; padding: 14px; font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; margin-top: 0.5rem; }
-  .wha-btn:hover { background: #1ebe5d; }
-
-  footer { background: #060F1E; padding: 1.5rem 2rem; text-align: center; border-top: 1px solid var(--borde); }
-  footer p { font-size: 12px; color: #3a5070; }
-  footer span { color: var(--dorado); }
-  @media (max-width: 768px) { nav ul { display: none; } .cot-layout { grid-template-columns: 1fr; } }
-</style>
-</head>
-<body>
-
-<nav>
-  <a href="index.html" class="logo">Alvaro <span>Centro Ferretero</span></a>
-  <ul>
-    <li><a href="index.html">Inicio</a></li>
-    <li><a href="catalogo.html">Catálogo</a></li>
-    <li><a href="cotizacion.html" class="active">Cotizar</a></li>
-    <li><a href="contacto.html">Contacto</a></li>
-  </ul>
-</nav>
-
-<div class="page-hero">
-  <h1>Solicitar <span>Cotización</span></h1>
-  <p>Completa el formulario y te respondemos por WhatsApp en minutos.</p>
-</div>
-
-<div class="cot-layout">
-  <div class="cot-info">
-    <h3>Te respondemos en minutos</h3>
-    <p>Envíanos el detalle de lo que necesitas y te damos precio, disponibilidad y tiempo de entrega al instante por WhatsApp.</p>
-    <div class="cot-feature"><div class="cot-dot"></div><span>Precios actualizados al momento</span></div>
-    <div class="cot-feature"><div class="cot-dot"></div><span>Disponibilidad en tiempo real</span></div>
-    <div class="cot-feature"><div class="cot-dot"></div><span>Delivery para pedidos grandes</span></div>
-    <div class="cot-feature"><div class="cot-dot"></div><span>Atención de lunes a sábado 8am–7pm</span></div>
+<!-- PRODUCTOS DESTACADOS -->
+<section class="sec sec-alt">
+  <div class="sec-header">
+    <div class="sec-tag">⭐ Destacados</div>
+    <h2>Productos populares</h2>
+    <p>Los más solicitados por nuestros clientes</p>
   </div>
-
-  <div>
-    <div class="form-group">
-      <label>Tu nombre</label>
-      <input type="text" id="cotNombre" placeholder="Ej: Juan Quispe">
+  <!-- ✏️ PRODUCTOS DESTACADOS — edita aquí -->
+  <div class="prods-grid">
+    <div class="prod-card">
+      <div class="prod-img">🔨</div>
+      <div class="prod-body">
+        <div class="prod-cat">Herramientas</div>
+        <div class="prod-name">Martillo de acero 16oz</div>
+        <div class="prod-precio">S/ 35 <small>/unidad</small></div>
+        <a href="cotizacion.html?p=Martillo+de+acero+16oz" class="btn-cot">Cotizar por WhatsApp</a>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Tu número de WhatsApp</label>
-      <input type="tel" id="cotTelefono" placeholder="Ej: 959 123 456">
+    <div class="prod-card">
+      <div class="prod-img">🔩</div>
+      <div class="prod-body">
+        <div class="prod-cat">Herramientas</div>
+        <div class="prod-name">Taladro percutor 600W</div>
+        <div class="prod-precio">S/ 189 <small>/unidad</small></div>
+        <a href="cotizacion.html?p=Taladro+percutor+600W" class="btn-cot">Cotizar por WhatsApp</a>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Categoría</label>
-      <select id="cotCategoria">
-        <option value="">Selecciona una categoría</option>
-        <option>Herramientas</option>
-        <option>Plomería</option>
-        <option>Material eléctrico</option>
-        <option>Pintura y acabados</option>
-        <option>Fijación y adhesivos</option>
-        <option>Construcción en general</option>
-        <option>Otro</option>
-      </select>
+    <div class="prod-card">
+      <div class="prod-img">⚡</div>
+      <div class="prod-body">
+        <div class="prod-cat">Eléctrico</div>
+        <div class="prod-name">Cable THW 2.5mm rollo 100m</div>
+        <div class="prod-precio">S/ 95 <small>/rollo</small></div>
+        <a href="cotizacion.html?p=Cable+THW+2.5mm+rollo+100m" class="btn-cot">Cotizar por WhatsApp</a>
+      </div>
     </div>
-    <div class="form-group">
-      <label>Detalle tu pedido</label>
-      <textarea id="cotDetalle" placeholder="Ej: Necesito 20 tubos PVC 4 pulgadas y accesorios..."></textarea>
+    <div class="prod-card">
+      <div class="prod-img">🖌️</div>
+      <div class="prod-body">
+        <div class="prod-cat">Pinturas</div>
+        <div class="prod-name">Pintura látex 4L</div>
+        <div class="prod-precio">S/ 48 <small>/galón</small></div>
+        <a href="cotizacion.html?p=Pintura+latex+4+litros" class="btn-cot">Cotizar por WhatsApp</a>
+      </div>
     </div>
-    <button class="wha-btn" onclick="enviarWhatsApp()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Enviar cotización por WhatsApp
-    </button>
   </div>
-</div>
-
-<footer>
-  <p>© 2025 <span>Alvaro Centro Ferretero</span> · Majes, Arequipa</p>
-</footer>
-
-<script>
-  window.addEventListener('load', function() {
-    var params = new URLSearchParams(window.location.search);
-    var prod = params.get('p');
-    if (prod) {
-      document.getElementById('cotDetalle').value = 'Hola, quisiera cotizar: ' + decodeURIComponent(prod);
-    }
-  });
-
-  function enviarWhatsApp() {
-    var nombre = document.getElementById('cotNombre').value.trim();
-    var telefono = document.getElementById('cotTelefono').value.trim();
-    var categoria = document.getElementById('cotCategoria').value;
-    var detalle = document.getElementById('cotDetalle').value.trim();
-    if (!nombre) { alert('Por favor ingresa tu nombre.'); return; }
-    if (!detalle) { alert('Por favor describe tu pedido.'); return; }
-    var numWha = '51944616131';
-    var msg = '¡Hola! Quiero una cotización 👋\n\n';
-    msg += '👤 *Nombre:* ' + nombre + '\n';
-    if (telefono) msg += '📱 *Teléfono:* ' + telefono + '\n';
-    if (categoria) msg += '📦 *Categoría:* ' + categoria + '\n';
-    msg += '\n📝 *Detalle:*\n' + detalle;
-    window.open('https://wa.me/' + numWha + '?text=' + encodeURIComponent(msg), '_blank');
-  }
-</script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alvaro Centro Ferretero - Majes, Arequipa</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --azul: #0B1F3A; --azul-medio: #153258; --azul-claro: #1E4A80; --dorado: #C9A84C; --dorado-h: #b8923e; --blanco: #FFFFFF; --gris: #A8B8CC; --borde: #1E3050; }
-  body { font-family: 'Barlow', sans-serif; background: var(--azul); color: var(--blanco); }
-  nav { background: var(--azul); border-bottom: 2px solid var(--dorado); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
-  .logo { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; color: var(--dorado); letter-spacing: 1px; text-transform: uppercase; text-decoration: none; }
-  .logo span { color: var(--blanco); }
-  nav ul { list-style: none; display: flex; gap: 1.5rem; }
-  nav ul li a { color: var(--gris); text-decoration: none; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.2s; }
-  nav ul li a:hover, nav ul li a.active { color: var(--dorado); }
-  .btn-primary { background: var(--dorado); color: var(--azul); border: none; padding: 12px 28px; font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; cursor: pointer; transition: background 0.2s; text-decoration: none; display: inline-block; }
-  .btn-primary:hover { background: var(--dorado-h); }
-  .btn-outline { background: transparent; color: var(--blanco); border: 1px solid var(--borde); padding: 12px 28px; font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 2px; cursor: pointer; transition: border-color 0.2s, color 0.2s; text-decoration: none; display: inline-block; }
-  .btn-outline:hover { border-color: var(--dorado); color: var(--dorado); }
-  section { padding: 4rem 2rem; }
-  .section-tag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--dorado); margin-bottom: 0.5rem; }
-  .section-header { margin-bottom: 2.5rem; }
-  .section-header h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; line-height: 1; }
-
-  /* HERO */
-  .hero { background: var(--azul-medio); padding: 6rem 2rem; text-align: center; border-bottom: 1px solid var(--borde); }
-  .hero-badge { display: inline-block; background: var(--dorado); color: var(--azul); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; padding: 4px 14px; border-radius: 2px; margin-bottom: 1rem; }
-  .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; line-height: 1; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .hero h1 span { color: var(--dorado); }
-  .hero p { font-size: 16px; color: var(--gris); max-width: 500px; margin: 1rem auto 2rem; line-height: 1.7; }
-  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-  /* STATS */
-  .stats { background: var(--dorado); display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; padding: 1.5rem 2rem; }
-  .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; font-weight: 800; color: var(--azul); line-height: 1; }
-  .stat-label { font-size: 12px; font-weight: 600; color: #6b4f10; text-transform: uppercase; letter-spacing: 0.5px; }
-
-  /* MISIÓN Y VISIÓN */
-  #mision { background: var(--azul); }
-  .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .mv-card { background: var(--azul-medio); border: 1px solid var(--borde); border-top: 3px solid var(--dorado); padding: 2rem; border-radius: 2px; }
-  .mv-card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.6rem; font-weight: 800; text-transform: uppercase; color: var(--dorado); margin-bottom: 1rem; }
-  .mv-card p { font-size: 15px; color: var(--gris); line-height: 1.8; }
-
-  /* GALERÍA */
-  #galeria { background: var(--azul-medio); }
-  .galeria-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-  .galeria-item { aspect-ratio: 1; background: var(--azul-claro); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; border: 1px solid var(--borde); overflow: hidden; }
-  .galeria-item:first-child { grid-column: span 2; grid-row: span 2; }
-  .galeria-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .galeria-icon { font-size: 2.5rem; opacity: 0.3; }
-  .galeria-label { font-size: 11px; color: var(--gris); text-transform: uppercase; letter-spacing: 1px; }
-  .galeria-hint { font-size: 12px; color: #5a7a9a; margin-top: 1rem; }
-
-  /* OFERTAS */
-  #ofertas { background: var(--azul); }
-  .ofertas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1px; background: var(--borde); border: 1px solid var(--borde); }
-  .oferta-card { background: var(--azul-medio); padding: 1.5rem; transition: background 0.15s; }
-  .oferta-card:hover { background: var(--azul-claro); }
-  .oferta-badge { display: inline-block; background: #c0392b; color: #fff; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 3px 8px; border-radius: 2px; margin-bottom: 0.75rem; }
-  .oferta-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-  .oferta-name { font-size: 14px; font-weight: 600; color: var(--blanco); margin-bottom: 0.5rem; line-height: 1.3; }
-  .oferta-precios { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
-  .precio-antes { font-size: 13px; color: #888; text-decoration: line-through; }
-  .precio-ahora { font-size: 20px; font-weight: 700; color: var(--dorado); }
-  .btn-cot { display: block; width: 100%; background: transparent; border: 1px solid var(--borde); color: var(--gris); padding: 7px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-radius: 2px; cursor: pointer; transition: all 0.15s; font-family: 'Barlow', sans-serif; text-align: center; text-decoration: none; }
-  .btn-cot:hover { border-color: var(--dorado); color: var(--dorado); }
-  .ofertas-nota { font-size: 12px; color: #5a7a9a; margin-top: 1.5rem; }
-
-  footer { background: #060F1E; padding: 1.5rem 2rem; text-align: center; border-top: 1px solid var(--borde); }
-  footer p { font-size: 12px; color: #3a5070; }
-  footer span { color: var(--dorado); }
-
-  @media (max-width: 768px) {
-    nav ul { display: none; }
-    .mv-grid { grid-template-columns: 1fr; }
-    .galeria-grid { grid-template-columns: repeat(2, 1fr); }
-    .galeria-item:first-child { grid-column: span 2; grid-row: span 1; }
-    .stats { grid-template-columns: repeat(3, 1fr); }
-  }
-</style>
-</head>
-<body>
-
-<nav>
-  <a href="index.html" class="logo">Alvaro <span>Centro Ferretero</span></a>
-  <ul>
-    <li><a href="index.html" class="active">Inicio</a></li>
-    <li><a href="catalogo.html">Catálogo</a></li>
-    <li><a href="cotizacion.html">Cotizar</a></li>
-    <li><a href="contacto.html">Contacto</a></li>
-  </ul>
-</nav>
-
-<section class="hero">
-  <div class="hero-badge">📍 Majes, Arequipa</div>
-  <h1>Alvaro<br><span>Centro Ferretero</span></h1>
-  <p>Materiales, herramientas y soluciones para construcción y hogar. Calidad, confianza y atención honesta.</p>
-  <div class="hero-btns">
-    <a href="cotizacion.html" class="btn-primary">Pedir cotización</a>
-    <a href="catalogo.html" class="btn-outline">Ver catálogo</a>
+  <!-- ✏️ FIN PRODUCTOS -->
+  <div style="text-align:center;margin-top:2rem;">
+    <a href="catalogo.html" style="display:inline-block;background:var(--azul);color:var(--blanco);padding:12px 32px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-radius:2px;text-decoration:none;border:2px solid var(--azul);transition:all 0.2s;" onmouseover="this.style.background='transparent';this.style.color='var(--azul)'" onmouseout="this.style.background='var(--azul)';this.style.color='var(--blanco)'">Ver catálogo completo →</a>
   </div>
 </section>
 
-<div class="stats">
-  <div class="stat-item" style="padding:0.5rem;">
-    <div class="stat-num">+500</div>
-    <div class="stat-label">Productos</div>
+<!-- BANNER OFERTA -->
+<div class="banner-oferta">
+  <div>
+    <h2>¿Tienes un<br><em>proyecto grande?</em></h2>
+    <p>Cotiza por volumen y obtén precios especiales</p>
   </div>
-  <div class="stat-item" style="padding:0.5rem;">
-    <div class="stat-num">+15</div>
-    <div class="stat-label">Años de experiencia</div>
-  </div>
-  <div class="stat-item" style="padding:0.5rem;">
-    <div class="stat-num">L–S</div>
-    <div class="stat-label">Lun a sáb 8am–7pm</div>
-  </div>
+  <a href="cotizacion.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--dorado);color:var(--azul);padding:14px 32px;font-family:'Barlow',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-radius:2px;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#b8923e'" onmouseout="this.style.background='var(--dorado)'">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="#0B1F3A"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Cotizar ahora
+  </a>
 </div>
 
 <!-- MISIÓN Y VISIÓN -->
-<section id="mision">
-  <div class="section-header">
-    <div class="section-tag">🏢 Quiénes somos</div>
+<section class="sec sec-alt">
+  <div class="sec-header">
+    <div class="sec-tag">🏢 Nosotros</div>
     <h2>Misión y Visión</h2>
   </div>
   <div class="mv-grid">
@@ -615,85 +346,87 @@
 </section>
 
 <!-- GALERÍA -->
-<section id="galeria">
-  <div class="section-header">
-    <div class="section-tag">📸 Nuestro local</div>
+<section class="sec">
+  <div class="sec-header">
+    <div class="sec-tag">📸 Nuestros locales</div>
     <h2>Conoce la ferretería</h2>
+    <p>Visítanos en cualquiera de nuestros dos locales en Majes</p>
   </div>
   <div class="galeria-grid">
-    <!-- ✏️ Reemplaza los emojis con etiquetas <img src="foto.jpg"> cuando tengas fotos reales -->
-    <div class="galeria-item"><div class="galeria-icon">🏪</div><div class="galeria-label">Fachada principal</div></div>
-    <div class="galeria-item"><div class="galeria-icon">🔧</div><div class="galeria-label">Herramientas</div></div>
-    <div class="galeria-item"><div class="galeria-icon">📦</div><div class="galeria-label">Almacén</div></div>
-    <div class="galeria-item"><div class="galeria-icon">🖌️</div><div class="galeria-label">Pinturas</div></div>
-    <div class="galeria-item"><div class="galeria-icon">⚡</div><div class="galeria-label">Eléctrico</div></div>
+    <!-- ✏️ Reemplaza con <img src="foto.jpg"> cuando tengas fotos reales -->
+    <div class="gal-item"><div class="gal-icon">🏪</div><div class="gal-lbl">Fachada Local 1</div></div>
+    <div class="gal-item"><div class="gal-icon">🔧</div><div class="gal-lbl">Herramientas</div></div>
+    <div class="gal-item"><div class="gal-icon">📦</div><div class="gal-lbl">Almacén</div></div>
+    <div class="gal-item"><div class="gal-icon">🏪</div><div class="gal-lbl">Fachada Local 2</div></div>
+    <div class="gal-item"><div class="gal-icon">⚡</div><div class="gal-lbl">Eléctrico</div></div>
   </div>
-  <p class="galeria-hint">💡 Pronto aquí estarán las fotos reales de nuestro local.</p>
 </section>
 
-<!-- OFERTAS -->
-<section id="ofertas">
-  <div class="section-header">
-    <div class="section-tag">🔥 Promociones</div>
-    <h2>Ofertas de la semana</h2>
-  </div>
-
-  <!-- ✏️ OFERTAS — cambia estos productos cada vez que quieras -->
-  <div class="ofertas-grid">
-
-    <div class="oferta-card">
-      <div class="oferta-badge">🔥 Oferta</div>
-      <div class="oferta-icon">🔨</div>
-      <div class="oferta-name">Martillo de acero 16oz</div>
-      <div class="oferta-precios">
-        <span class="precio-antes">S/ 42</span>
-        <span class="precio-ahora">S/ 35</span>
-      </div>
-      <a href="cotizacion.html" class="btn-cot">Cotizar ahora</a>
-    </div>
-
-    <div class="oferta-card">
-      <div class="oferta-badge">🔥 Oferta</div>
-      <div class="oferta-icon">⚡</div>
-      <div class="oferta-name">Cable THW 2.5mm rollo 100m</div>
-      <div class="oferta-precios">
-        <span class="precio-antes">S/ 110</span>
-        <span class="precio-ahora">S/ 95</span>
-      </div>
-      <a href="cotizacion.html" class="btn-cot">Cotizar ahora</a>
-    </div>
-
-    <div class="oferta-card">
-      <div class="oferta-badge">🔥 Oferta</div>
-      <div class="oferta-icon">🖌️</div>
-      <div class="oferta-name">Pintura látex 4L</div>
-      <div class="oferta-precios">
-        <span class="precio-antes">S/ 55</span>
-        <span class="precio-ahora">S/ 48</span>
-      </div>
-      <a href="cotizacion.html" class="btn-cot">Cotizar ahora</a>
-    </div>
-
-    <div class="oferta-card">
-      <div class="oferta-badge">🔥 Oferta</div>
-      <div class="oferta-icon">🔩</div>
-      <div class="oferta-name">Taladro percutor 600W</div>
-      <div class="oferta-precios">
-        <span class="precio-antes">S/ 210</span>
-        <span class="precio-ahora">S/ 189</span>
-      </div>
-      <a href="cotizacion.html" class="btn-cot">Cotizar ahora</a>
-    </div>
-
-  </div>
-  <!-- ✏️ FIN OFERTAS -->
-
-  <p class="ofertas-hint" style="font-size:12px;color:#5a7a9a;margin-top:1.5rem;">Ofertas válidas hasta agotar stock. <a href="catalogo.html" style="color:var(--dorado);">Ver catálogo completo →</a></p>
-</section>
-
+<!-- FOOTER -->
 <footer>
-  <p>© 2025 <span>Alvaro Centro Ferretero</span> · Majes, Arequipa · <a href="cotizacion.html" style="color:var(--dorado);text-decoration:none;">Cotizar por WhatsApp</a></p>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-f">Alvaro <span>Centro Ferretero</span></div>
+      <p>Materiales, herramientas y soluciones para construcción y hogar en Majes, Arequipa. Atención honesta y precios directos.</p>
+      <div style="font-size:13px;color:rgba(255,255,255,0.5);">📱 <a href="https://wa.me/51944616131" style="color:var(--dorado);text-decoration:none;">+51 944 616 131</a></div>
+      <div class="footer-social">
+        <a href="#" class="social-btn" title="Facebook">f</a>
+        <a href="#" class="social-btn" title="WhatsApp">w</a>
+        <a href="#" class="social-btn" title="Instagram">ig</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="cotizacion.html">Cotizar</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Categorías</h4>
+      <ul>
+        <li><a href="catalogo.html">Herramientas</a></li>
+        <li><a href="catalogo.html">Plomería</a></li>
+        <li><a href="catalogo.html">Eléctrico</a></li>
+        <li><a href="catalogo.html">Pinturas</a></li>
+        <li><a href="catalogo.html">Construcción</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Nuestros Locales</h4>
+      <div class="footer-tienda">
+        <strong>📍 Local 1 — Majes</strong>
+        <span>Dirección por actualizar<br>Lun–Sáb: 8:00am – 7:00pm</span>
+      </div>
+      <div class="footer-tienda">
+        <strong>📍 Local 2 — Majes</strong>
+        <span>Dirección por actualizar<br>Lun–Sáb: 8:00am – 7:00pm</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>Alvaro Centro Ferretero</span> · Majes, Arequipa, Perú</p>
+    <p>Diseñado con ❤️ para Majes</p>
+  </div>
 </footer>
 
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a href="https://wa.me/51944616131?text=Hola!+Quisiera+información" class="wha-float" target="_blank" title="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+var cur = 0, tot = 3, timer;
+function irSlide(n) {
+  cur = n;
+  document.getElementById('slides').style.transform = 'translateX(-' + (cur * 100) + '%)';
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === cur));
+}
+function moverSlide(d) { irSlide((cur + d + tot) % tot); resetTimer(); }
+function resetTimer() { clearInterval(timer); timer = setInterval(() => moverSlide(1), 5000); }
+resetTimer();
+</script>
 </body>
 </html>
